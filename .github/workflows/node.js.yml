@@ -10,21 +10,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: ["20.13.1"]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
     - name: checkout@master
       uses: actions/checkout@v4
-    - name: build with node@v${{ matrix.node-version }}
+    - name: build with node@v20.13.1
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 20.13.1
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
-    - name: upload
+    - name: upload build artifact
       uses: actions/upload-pages-artifact@v3
       with:
         name: 'pages-artifact'
